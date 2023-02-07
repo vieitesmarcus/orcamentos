@@ -4,9 +4,13 @@
 
 use Source\Controller\Api\Receita\ReceitaApiController;
 use Source\Controller\Api\Receita\ReceitaApiStoreController;
+use Source\Controller\Api\Receita\ReceitaApiDestroyController;
 
 return [
-    "GET|/receitas" => ReceitaApiController::class,
-    "POST|/receitas" => ReceitaApiStoreController::class,
-    "PUT|/receitas/{id}" => ReceitaApiStoreController::class,
+    //rotas de Receitas
+    "GET|/receitas" => ReceitaApiController::class,//traz todas as receitas armazenadas
+    "GET|/receitas/{id}" => ReceitaApiController::class,// traz em detalhes 
+    "POST|/receitas" => ReceitaApiStoreController::class,//insere uma nova receita
+    "PUT|/receitas/{id}" => ReceitaApiStoreController::class,//modifica a receita
+    "DELETE|/receitas/{id}" =>ReceitaApiDestroyController::class// exclui uma receita
 ];

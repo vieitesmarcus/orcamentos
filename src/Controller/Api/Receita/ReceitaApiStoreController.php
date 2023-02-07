@@ -17,23 +17,21 @@ class ReceitaApiStoreController implements RequestHandlerInterface
      * @param integer|null $id
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, int $id=null): ResponseInterface
+    public function handle(ServerRequestInterface $request, int $id = null): ResponseInterface
     {
-        if($id){
-            echo $id;
-        }
         $obGenericoRequisicao = json_decode(file_get_contents("php://input"));
-        $receita['descricao'] = filter_var($obGenericoRequisicao->descricao,  FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $receita['valor'] = filter_var($obGenericoRequisicao->valor,  FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $receita['data'] = filter_var($obGenericoRequisicao->data, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $obReceita = new Receita();
-        $obReceita->bootstrap($id=null ,$receita['descricao'], $receita['valor'], $receita['data']);
-        echo '<pre>';
-        var_dump($obReceita);
-        echo '</pre>';
-        exit();
-
-        $body = json_encode($receita);
-        return new Response(201, ["Content-type" => "Application/json"], $body);
+        $receita['descricao'] = filter_var($obGenericoRequisicao->descricao, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $receita['valor'] = filter_var($obGenericoRequisicao->valor, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        // $receita['data'] = filter_var($obGenericoRequisicao->data, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($id) {
+            $obReceita = (new Receita())->findById($id);
+        } else {
+            $obReceita = new Receita();
+        }
+        // $obReceita->bootstrap($id, $receita['descricao'], $receita['valor'], $receita['data']);
+        $obReceita->setDescricao($receita['descricao']);
+        $obReceita->setValor($receita['valor']);
+        $obReceita->save();
+        return new Response(201, ["Content-type" => "Application/json"]);
     }
 }

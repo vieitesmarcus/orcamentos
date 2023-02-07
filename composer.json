@@ -16,6 +16,7 @@
         "psr/http-factory": "^1.0",
         "php-http/message-factory": "^1.0",
         "psr/http-server-handler": "^1.0",
-        "phpmailer/phpmailer": "^6.6"
+        "phpmailer/phpmailer": "^6.6",
+        "coffeecode/datalayer": "2.0.*"
     }
 }

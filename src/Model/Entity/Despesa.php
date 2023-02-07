@@ -2,21 +2,27 @@
 
 namespace Source\Model\Entity;
 
+use CoffeeCode\DataLayer\DataLayer;
 use DateTime;
 
-class Despesa
+class Despesa extends DataLayer
 {
-    /** @var int */
-    private int $id;
+    // /** @var int */
+    // private int $id;
 
-    /** @var string */
-    private string $descricao;
+    // /** @var string */
+    // private string $descricao;
 
-    /** @var float */
-    private float $valor;
+    // /** @var float */
+    // private float $valor;
 
-    /** @var string */
-    private string $date;
+    // /** @var string */
+    // private string $date;
+
+    public function __construct()
+    {
+        parent::__construct("despesas", ['descricao', 'valor'], 'id', false);
+    }
 
     public function bootstrap(int $id, string $descricao, float $valor, string $date): Despesa
     {
@@ -51,28 +57,28 @@ class Despesa
         return $this;
     }
 
-   
+
     public function getValor(): float
     {
         return $this->valor;
     }
 
-   
+
     public function setValor(float $valor): Despesa
     {
-        $valor = filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT);
-        $this->valor = $valor;
+        $valor = filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $this->valor = (float) $valor;
 
         return $this;
     }
 
-    
+
     public function getDate(): string
     {
         return $this->date;
     }
 
-     
+
     public function setDate(string $date): Despesa
     {
         $date = (new DateTime())->createFromFormat("d/m/Y", $date, new \DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
