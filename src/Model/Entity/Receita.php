@@ -2,22 +2,19 @@
 
 namespace Source\Model\Entity;
 
+use CoffeeCode\DataLayer\DataLayer;
 use DateTime;
 use DateTimeZone;
 
-class Receita
+class Receita extends DataLayer
 {
-    /** @var int */
-    private ?int $id;
 
-    /** @var string */
-    private string $descricao;
 
-    /** @var float */
-    private float $valor;
-
-    /** @var string */
-    private string $date;
+    public function __construct()
+    {
+        parent::__construct("receitas", ["descricao", "valor"], "id", false);
+    }
+    
 
     public function bootstrap(int $id = null, string $descricao, float $valor, string $date): Receita
     {
@@ -69,7 +66,7 @@ class Receita
      */
     public function setValor(float $valor): Receita
     {
-        $valor = number_format(filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT), 2, ",", ".");
+        $valor = filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $this->valor = (float)$valor;
 
         return $this;
