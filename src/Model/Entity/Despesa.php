@@ -33,7 +33,9 @@ class Despesa extends DataLayer
         return $this;
     }
 
+
     public function getId(): ?int
+
     {
         return $this->id;
     }

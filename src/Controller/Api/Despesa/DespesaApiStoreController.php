@@ -25,17 +25,29 @@ class DespesaApiStoreController implements RequestHandlerInterface
             $despesa['categoria'] = 8;
         }
 
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e376918bfa4f856814f4e39e375be865e258083a
         if ($id) {
             $obDespesa = (new Despesa())->findById($id);
         } else {
             $obDespesa = new Despesa();
         }
+<<<<<<< HEAD
+=======
+        // $obDespesa->bootstrap($id, $despesa['descricao'], $despesa['valor'], $despesa['data']);
+>>>>>>> e376918bfa4f856814f4e39e375be865e258083a
         $obDespesa->setDescricao($despesa['descricao']);
         $obDespesa->setValor($despesa['valor']);
         $obDespesa->setCategoria($despesa['categoria']);
         $obDespesa->save();
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> e376918bfa4f856814f4e39e375be865e258083a
         return new Response(201, ["Content-type" => "Application/json"]);
     }
 }

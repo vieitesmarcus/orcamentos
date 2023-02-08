@@ -24,4 +24,5 @@ return [
     "POST|/despesas"                  => DespesaApiStoreController::class,     //insere uma nova Despesa
     "PUT|/despesas/{id}"              => DespesaApiStoreController::class,     //modifica a Despesa
     "DELETE|/despesas/{id}"           => DespesaApiDestroyController::class,   // exclui uma Despesa
+
 ];

@@ -5,9 +5,11 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 
 // PEGA OS DADOS DA URL
+
 $url       = $_SERVER["REQUEST_URI"];
 $method    = $_SERVER['REQUEST_METHOD'] ?? "GET";
 $getInputs = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -15,6 +17,7 @@ $routes = require __DIR__ . '/../routes/routes.php';
 
 $urlArray = explode("/", $url);
 array_shift($urlArray);
+
 $qtdUrl = count($urlArray);
 if ($qtdUrl == 2) {
     $id          = filter_var($urlArray[1], FILTER_SANITIZE_NUMBER_INT);
@@ -34,15 +37,18 @@ $url         = "/" . implode("/", $urlArray);
 
 
 if ($_GET = (isset($getInputs) ? $getInputs : [])) {
+
     $url = explode("?", $url);
     $url = $url[0];
 }
+
 
 
 // echo '<pre>';
 // var_dump($url, $urlArray, $get,$qtdUrl);
 // echo '</pre>';
 // exit();
+
 
 
 
@@ -69,9 +75,12 @@ $creator = new ServerRequestCreator(
 );
 
 $serverRequest = $creator->fromGlobals();
+
 $controller    = $routes["$method|$url"];
 $page          = new $controller();
 $response      = $page->handle($serverRequest, $id ?? null);
+
+
 
 foreach ($response->getHeaders() as $name => $values) {
     foreach ($values as $value) {
