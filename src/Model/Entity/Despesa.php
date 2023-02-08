@@ -75,14 +75,26 @@ class Despesa extends DataLayer
 
     public function getDate(): string
     {
+        $this->setDate($this->date);
         return $this->date;
     }
 
 
     public function setDate(string $date): Despesa
     {
-        $date = (new DateTime())->createFromFormat("d/m/Y", $date, new \DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
+        $date = (new DateTime())->createFromFormat("Y-m-d", $date, new \DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
         $this->date = $date;
         return $this;
+    }
+
+    public function setCategoria(int $categoria): Despesa
+    {
+        $this->categoria = $categoria;
+        return $this;
+    }
+
+    public function getCategoria(): string
+    {
+        return ((new Categoria())->findById($this->categoria))->data->name;
     }
 }

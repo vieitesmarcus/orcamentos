@@ -77,18 +77,26 @@ class Receita extends DataLayer
      */
     public function getDate(): string
     {
+        $this->setDate($this->date);
         return $this->date;
     }
 
-    /**
-     * Set the value of date
-     *
-     * @return  self
-     */
+
     public function setDate(string $date): Receita
     {
-        $date = (new DateTime())->createFromFormat("d/m/Y", $date, new DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
+        $date = (new DateTime())->createFromFormat("Y-m-d", $date, new \DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
         $this->date = $date;
         return $this;
+    }
+
+    public function setCategoria(int $categoria): Receita
+    {
+        $this->categoria = $categoria;
+        return $this;
+    }
+
+    public function getCategoria(): string
+    {
+        return ((new Categoria())->findById($this->categoria))->data->name;
     }
 }
