@@ -5,9 +5,9 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 
 // PEGA OS DADOS DA URL
-$url = $_SERVER["PATH_INFO"]??"/receitas";
+$url = $_SERVER["REQUEST_URI"];
 $method = $_SERVER['REQUEST_METHOD'] ?? "GET";
-
+$get = filter_input_array(INPUT_GET, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $routes = require __DIR__ . '/../routes/routes.php';
@@ -21,11 +21,17 @@ if(isset($urlArray[1]) and $urlArray[1]){
     $urlArray[1] = "{id}";
     $url = "/".implode("/", $urlArray);
 }
+if($get){
+    $url = explode("?", $url);
+    $url = $url[0];
+}
+
+
 
 
 // VERIFICA SE A ROTA EXISTE COM A URL QUE VEM 
 if (!array_key_exists("$method|$url", $routes)) {
-    header("Location:/receitas", true, 302);
+    header("Content-type:Application/json", true, 404);
     exit();
     // if(isset($_SESSION['logado']) && $_SESSION['logado'] === true){
     //     header('Location:/mypets');
