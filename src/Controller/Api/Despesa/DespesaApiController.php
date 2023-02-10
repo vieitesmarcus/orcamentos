@@ -35,7 +35,6 @@ class DespesaApiController implements RequestHandlerInterface
 
 
         if (isset($request->getQueryParams()['descricao'])) {
-<<<<<<< HEAD
             $descricao = filter_var($request->getQueryParams()['descricao'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $params = http_build_query(["desc" => "%$descricao%"]);
             $despesas = (new Despesa())->find("descricao LIKE :desc", $params)->limit(10)->fetch(true);
@@ -45,9 +44,6 @@ class DespesaApiController implements RequestHandlerInterface
             $dia = filter_var($request->getQueryParams()['dia'] ?? "", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $params = http_build_query(["date" => "%$ano%-%$mes%-%$dia%"]);
             $despesas = (new Despesa())->find("date LIKE :date ", $params)->limit(10)->fetch(true);
-=======
-            $despesas = (new Despesa())->find("descricao = :desc", $request->getQueryParams()['descricao'], " descricao, categoria, date")->limit(10)->fetch(true);
->>>>>>> e376918bfa4f856814f4e39e375be865e258083a
         } else {
             $despesas = (new Despesa())->find()->limit(10)->fetch(true);
         }
@@ -62,10 +58,7 @@ class DespesaApiController implements RequestHandlerInterface
 
         foreach ($despesas as $despesa) {
             array_push($jsonDespesas, [
-<<<<<<< HEAD
                 "id" => $despesa->getId(),
-=======
->>>>>>> e376918bfa4f856814f4e39e375be865e258083a
                 "descricao" => $despesa->getDescricao(),
                 "categoria" => $despesa->getCategoria(),
                 "data" => $despesa->getDate()
