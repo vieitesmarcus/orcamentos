@@ -19,7 +19,7 @@ class ReceitaApiStoreController implements RequestHandlerInterface
     {
         $obGenericoRequisicao = json_decode(file_get_contents("php://input"));
         $receita['descricao'] = filter_var($obGenericoRequisicao->descricao, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $receita['valor'] = filter_var($obGenericoRequisicao->valor, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $receita['valor']     = filter_var($obGenericoRequisicao->valor, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $receita['categoria'] = (int)filter_var($obGenericoRequisicao->categoria ?? 8, FILTER_SANITIZE_NUMBER_INT);
         if ($receita['categoria'] < 1 or $receita['categoria'] > 8) {
             $receita['categoria'] = 8;

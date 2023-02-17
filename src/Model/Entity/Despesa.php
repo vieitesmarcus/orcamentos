@@ -54,7 +54,7 @@ class Despesa extends DataLayer
 
     public function setDescricao(string $descricao): Despesa
     {
-        $descricao = filter_var($descricao, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $descricao       = filter_var($descricao, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $this->descricao = $descricao;
         return $this;
     }
@@ -68,7 +68,7 @@ class Despesa extends DataLayer
 
     public function setValor(float $valor): Despesa
     {
-        $valor = filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $valor       = filter_var($valor, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $this->valor = (float) $valor;
 
         return $this;
@@ -84,7 +84,7 @@ class Despesa extends DataLayer
 
     public function setDate(string $date): Despesa
     {
-        $date = (new DateTime())->createFromFormat("Y-m-d", $date, new \DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
+        $date       = (new DateTime())->createFromFormat("Y-m-d", $date, new \DateTimeZone("America/Sao_Paulo"))->format("d-m-Y");
         $this->date = $date;
         return $this;
     }

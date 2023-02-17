@@ -19,7 +19,7 @@ class ReceitaApiController implements RequestHandlerInterface
                 $body = html_entity_decode(json_encode([
                     "categoria" => $obReceita->getCategoria(),
                     "descricao" => $obReceita->getDescricao(),
-                    "date" => $obReceita->getDate()
+                    "date"      => $obReceita->getDate()
                 ]));
                 return new Response(200, ["Content-type" => "Application/json"], $body);
             }
@@ -32,15 +32,14 @@ class ReceitaApiController implements RequestHandlerInterface
 
         if (isset($request->getQueryParams()['descricao'])) {
             $descricao = filter_var($request->getQueryParams()['descricao'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $params = http_build_query(["desc" => "%$descricao%"]);
-            $receitas = (new Receita())->find("descricao LIKE :desc", $params)->limit(10)->fetch(true);
+            $params    = http_build_query(["desc" => "%$descricao%"]);
+            $receitas  = (new Receita())->find("descricao LIKE :desc", $params)->limit(10)->fetch(true);
         } else if (isset($request->getQueryParams()['ano']) and isset($request->getQueryParams()['mes'])) {
-            $ano = filter_var($request->getQueryParams()['ano'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $mes = filter_var($request->getQueryParams()['mes'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $dia = filter_var($request->getQueryParams()['dia'] ?? "", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $params = http_build_query(["date" => "%$ano%-%$mes%-%$dia%"]);
+            $ano      = filter_var($request->getQueryParams()['ano'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $mes      = filter_var($request->getQueryParams()['mes'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dia      = filter_var($request->getQueryParams()['dia'] ?? "", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $params   = http_build_query(["date" => "%$ano%-%$mes%-%$dia%"]);
             $receitas = (new Receita())->find("date LIKE :date ", $params)->limit(10)->fetch(true);
-
         } else {
             $receitas = (new Receita())->find()->limit(10)->fetch(true);
         }
@@ -55,12 +54,10 @@ class ReceitaApiController implements RequestHandlerInterface
 
         foreach ($receitas as $receita) {
             array_push($jsonReceitas, [
-
-                "id" => $receita->getId(),
-
+                "id"        => $receita->getId(),
                 "descricao" => $receita->getDescricao(),
                 "categoria" => $receita->getCategoria(),
-                "data" => $receita->getDate()
+                "data"      => $receita->getDate()
             ]);
         }
 
